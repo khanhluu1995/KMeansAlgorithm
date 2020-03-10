@@ -1,14 +1,18 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class KMeans {
-    public ArrayList<double[]> cluster1;
-    public ArrayList<double[]> cluster2;
-    public ArrayList<double[]> cluster3;
-    public ArrayList<double[]> cluster4;
-    public ArrayList<double[]> cluster5;
-    public ArrayList<double[]> cluster6;
+     ArrayList<double[]> cluster1;
+     ArrayList<double[]> cluster2;
+     ArrayList<double[]> cluster3;
+     ArrayList<double[]> cluster4;
+     ArrayList<double[]> cluster5;
+     ArrayList<double[]> cluster6;
     double[] k1,k2,k3,k4,k5,k6;
     double[][] inputData;
+    int algorithmNumOfLoops = 100;
+    FileWriter fileWriter;
 
     public KMeans(double[][] inputData){
         this.inputData = inputData;
@@ -117,6 +121,7 @@ public class KMeans {
         clusterIdentifier(chosen,candidate);
     }
 
+    //start to process data by calculating distances between the candidate to the 6 k means
     public void processData(){
         cluster1= new ArrayList<>();
         cluster2= new ArrayList<>();
@@ -127,13 +132,24 @@ public class KMeans {
         for(int i = 0; i < inputData.length; i++){
             findTheClosestDistance(inputData[i]);
         }
+
         k1 = findNewMean(cluster1);
         k2 = findNewMean(cluster2);
         k3 = findNewMean(cluster3);
         k4 = findNewMean(cluster4);
         k5 = findNewMean(cluster5);
         k6 = findNewMean(cluster6);
+        algorithmNumOfLoops--;
+//        printClusterSize();
+//        System.out.println("=====END OF ITERATION=====");
+        if(algorithmNumOfLoops > 0){
+            processData();
+        }
+        else {
+            writeToCSV();
+        }
     }
+
 
     private double[] findNewMean(ArrayList<double[]> myCluster){
         double[] res = new double[60];
@@ -145,5 +161,43 @@ public class KMeans {
             res[i] /= myCluster.size();
         }
         return res;
+    }
+    
+    public void printClusterSize(){
+        System.out.println("The 6 cluster sizes are: ");
+        System.out.println(cluster1.size());
+        System.out.println(cluster2.size());
+        System.out.println(cluster3.size());
+        System.out.println(cluster4.size());
+        System.out.println(cluster5.size());
+        System.out.println(cluster6.size());
+    }
+    
+    private void writeToCSV() {
+        try {
+            chooseCluster("cluster1.txt", cluster1);
+            chooseCluster("cluster2.txt", cluster2);
+            chooseCluster("cluster3.txt", cluster3);
+            chooseCluster("cluster4.txt", cluster4);
+            chooseCluster("cluster5.txt", cluster5);
+            chooseCluster("cluster6.txt", cluster6);
+
+        }catch (IOException ex){
+            System.out.println("Failed to write to csv");
+            ex.printStackTrace();
+        }
+
+    }
+
+    private void chooseCluster(String filename, ArrayList<double[]> myCluster) throws IOException{
+        fileWriter = new FileWriter(filename);
+        for(int i = 0; i < myCluster.size(); i++){
+            //60 columns
+            for(int j = 0; j < 60; j++){
+                fileWriter.write(Double.toString(myCluster.get(i)[j]) + " ");
+            }
+            fileWriter.write("\n");
+        }
+        fileWriter.close();
     }
 }
