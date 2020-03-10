@@ -24,18 +24,30 @@ public class Main {
         }
 
         KMeans kMeans = new KMeans(inputData);
-        kMeans.processData();
+        System.out.println(kMeans.k1[0]);
+        System.out.println(kMeans.k2[0]);
+        System.out.println(kMeans.k3[0]);
+        System.out.println(kMeans.k4[0]);
+        System.out.println(kMeans.k5[0]);
+        System.out.println(kMeans.k6[0]);
 
+        System.out.println("=======================");
+        System.out.println("After processing data: ");
+        kMeans.processData();
         System.out.println(kMeans.cluster1.size());
         System.out.println(kMeans.cluster2.size());
         System.out.println(kMeans.cluster3.size());
         System.out.println(kMeans.cluster4.size());
         System.out.println(kMeans.cluster5.size());
         System.out.println(kMeans.cluster6.size());
-        System.out.println("=======================");
-
-        System.out.println(kMeans.k1[1]);
+        System.out.println("kmeans: ");
+        System.out.println(kMeans.k1[0]);
         System.out.println(kMeans.k2[0]);
+        System.out.println(kMeans.k3[0]);
+        System.out.println(kMeans.k4[0]);
+        System.out.println(kMeans.k5[0]);
+        System.out.println(kMeans.k6[0]);
+
 
     }
 

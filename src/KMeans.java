@@ -1,20 +1,20 @@
 import java.util.ArrayList;
 
 public class KMeans {
-    public ArrayList<double[]> cluster1 = new ArrayList<>();
-    public ArrayList<double[]> cluster2 = new ArrayList<>();
-    public ArrayList<double[]> cluster3 = new ArrayList<>();
-    public ArrayList<double[]> cluster4 = new ArrayList<>();
-    public ArrayList<double[]> cluster5 = new ArrayList<>();
-    public ArrayList<double[]> cluster6 = new ArrayList<>();
-    //RANDOMLY pick k means
+    public ArrayList<double[]> cluster1;
+    public ArrayList<double[]> cluster2;
+    public ArrayList<double[]> cluster3;
+    public ArrayList<double[]> cluster4;
+    public ArrayList<double[]> cluster5;
+    public ArrayList<double[]> cluster6;
     double[] k1,k2,k3,k4,k5,k6;
     double[][] inputData;
 
     public KMeans(double[][] inputData){
         this.inputData = inputData;
+        //RANDOMLY pick k means
         k1 = inputData[0];
-        k2 = inputData[0];
+        k2 = inputData[99];
         k3 = inputData[199];
         k4 = inputData[299];
         k5 = inputData[399];
@@ -118,13 +118,21 @@ public class KMeans {
     }
 
     public void processData(){
-        for(int i = 0; i < 2; i++){
+        cluster1= new ArrayList<>();
+        cluster2= new ArrayList<>();
+        cluster3= new ArrayList<>();
+        cluster4= new ArrayList<>();
+        cluster5= new ArrayList<>();
+        cluster6= new ArrayList<>();
+        for(int i = 0; i < inputData.length; i++){
             findTheClosestDistance(inputData[i]);
         }
-
         k1 = findNewMean(cluster1);
         k2 = findNewMean(cluster2);
-
+        k3 = findNewMean(cluster3);
+        k4 = findNewMean(cluster4);
+        k5 = findNewMean(cluster5);
+        k6 = findNewMean(cluster6);
     }
 
     private double[] findNewMean(ArrayList<double[]> myCluster){
@@ -136,8 +144,6 @@ public class KMeans {
             }
             res[i] /= myCluster.size();
         }
-
-
         return res;
     }
 }
